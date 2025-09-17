@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--CSS 파일업로드-->
+    <link rel="stylesheet" href="./style.css" />
+    <!--JS 파일업로드-->
+    <script type="module" src="./dist/script.js" defer></script>
+    <title>UMC TODOLIST</title>
+  </head>
+  <body>
+    <div class="todolistContainer">
+      <h1>TODOLIST</h1>
+      <form id="todoForm" class="inputcontainer">
+        <input type="text" id="todoInput" placeholder="할 일 입력" />
+        <button type="submit" class="plusButton">할 일 추가</button>
+      </form>
+      <div class="listContainer">
+        <div class="todoitems">
+          <h2>할 일</h2>
+          <ul class="todolistBox" id="todoitem"></ul>
+        </div>
+
+        <div class="doneitems">
+          <h2>완료</h2>
+          <ul class="donelistBox" id="donelist"></ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
