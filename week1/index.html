@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>week 1</title>
+        <script src="dist/todolist.js" defer></script>
+        <link rel="stylesheet" href="todolist.css">
+    </head>
+    <body>
+        <div class="container">
+            <main>
+                <h3 class="main-header">MONI TODO</h3>
+                <div class="input-container">
+                    <input
+                        id="task-input"
+                        class="input-container__task-input"
+                        type="text" 
+                        placeholder="할 일을 추가하세요!"
+                    />
+                    <button 
+                        id="add-button"
+                        class="input-container__add-button"
+                    >할 일 추가</button>
+                </div>
+                <section class="lists-container">
+                    <div class="task-container">
+                        <p class="task-container__title">할 일 목록</p>
+                        <ul
+                            id="todo-list" 
+                            class="task-container__ul"
+                        ></ul>
+                    </div>
+
+                    <div class="task-container">
+                        <p class="task-container__title">완료</p>
+                        <ul
+                            id="done-list"
+                            class="task-container__ul"
+                        ></ul>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </body>
+</html> 
+

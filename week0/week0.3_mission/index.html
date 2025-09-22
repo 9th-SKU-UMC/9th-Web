@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMC Study Plan</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <div class="container">
+        <header class="container__header">UMC Study Plan</header>
+        <input id="plan-input" class="container__input" placeholder="스터디 계획을 작성해보세요!">
+        <main class="container__main">
+            <section class="list-box">
+                <div class="list-box__title">해야할 일</div>
+                <ul id="todo-list"></ul>
+            </section>
+
+            <section class="list-box">
+                <div class="list-box__title">해낸 일</div>
+                <ul id="done-list"></ul>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById('plan-input');
+            const todoList = document.getElementById('todo-list');
+            const doneList = document.getElementById('done-list');
+
+            // 할 일 추가
+            input.addEventListener('keydown', (e) => {
+                if(e.key === 'Enter') {
+                    const text = input.value.trim();
+                    if(!text) return;
+                    todoList.appendChild(makeItem(text));
+                    input.value = '';
+                }
+            });
+
+            // 리스트에서 버튼 클릭할 시
+            document.addEventListener('click', (e) => {
+
+                const button = e.target.closest('button');
+                if(!button) return;
+
+                // 부모 요소: li
+                const li = button.closest('.item');
+                if(!li) return;
+
+                // 버튼의 data-action에 따라 기능 수행
+                if(button.dataset.action === 'done') { // 완료 버튼 클릭 시
+                    li.querySelector('.item__actions').innerHTML = 
+                    '<button class="item__button" data-action="delete">삭제</button>';
+                    doneList.appendChild(li);   
+                } else if(button.dataset.action === 'delete') { // 삭제 버튼 클릭 시
+                    li.remove();
+                }
+            });
+
+            // item 만들기
+            function makeItem(text) { //type: 'todo' | 'done' 
+                const li = document.createElement('li');
+                li.className = 'item';
+                li.innerHTML = `
+                    <span class="item__title">${text}</span>
+                    <span class="item__actions">
+                        <button class="item__button" data-action="done">완료</button>
+                    </span>
+                `;
+
+                return li;
+            }
+        });
+    </script>
+</body>
+</html>
