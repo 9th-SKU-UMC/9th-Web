@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+}
+
+.todo-container {
+    text-align: center;
+    width: 700px;
+    height: 700px;
+}
+
+.todo-container__header {
+    margin-top: 100px;
+    margin-bottom: 20px;
+    font-size: 30px;
+}
+
+.todo-container__form {
+    display: flex;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.todo-container__input {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    font-size: 25px;
+    border-radius: 8px;
+    border: none;
+}
+
+.todo-container__button {
+    font-size: 25px;
+    padding: 10px;    
+    border-radius: 8px;
+    border: none;
+    background-color: lightblue;
+}
+
+.render-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.render-container__title {
+    font-size: 25px;
+}
+
+.render-container__list {
+    list-style: none;
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+.render-container__section {
+    width: 100%;
+    text-align: center;
+}
+
+.item {
+    border-radius: 8px;
+    background-color: white;
+    margin-bottom: 10px;
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 10px;
+}
+
+.item-btn {
+    border-radius: 8px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border: none;
+    background-color: lightblue;
+}
