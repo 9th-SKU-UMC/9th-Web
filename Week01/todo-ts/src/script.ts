@@ -36,7 +36,7 @@ const getTodoText = (): string => {
 
 //투두 추가하는 함수 정의
 const addTodo = (text: string): void => {
-  todos.push({ id: Date.now(), text });
+  todos = [...todos, { id: Date.now(), text }]; //피드백 반영 push()메서드 -> 전개 연산자로 수정
   todoInput.value = "";
   renderTasks();
 };
