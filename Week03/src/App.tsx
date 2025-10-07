@@ -1,72 +1,49 @@
 import './App.css';
-import { Link, Route, Routes } from './router';
-import { useCurrentPath } from './router/useCurrentPath';
+import HomePage from './pages/HomePage';
+import MoviePage from './pages/MoviesPage.tsx';
+import NotFoundPage from './pages/NotFoundPage';
+import MovieDetailPage from './pages/MovieDetailPage';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-const MatthewPage = () => {
-  const path = useCurrentPath();
-  return (
-    <div>
-      <h1>매튜 페이지</h1>
-      <p>현재 경로: {path}</p>
-    </div>
-  );
-};
+// BrowserRouter v5
+// createBrowserRouter v6 >> 이걸 기준으로 진행하겠음
+// react-router-dom v7 (next.js, remix)
 
-const AeongPage = () => {
-  const path = useCurrentPath();
-  return (
-    <div>
-      <h1>애옹 페이지</h1>
-      <p>현재 경로: {path}</p>
-    </div>
-  );
-};
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <HomePage />,
+    errorElement: <NotFoundPage />,
+    children: [
+      {
+        path: 'movies/:category',
+        element: <MoviePage />,
+      },
+      {
+        path: 'movie/:movieId',
+        element: <MovieDetailPage />,
+      },
+    ],
+  },
+]);
 
-const JoyPage = () => {
-  const path = useCurrentPath();
-  return (
-    <div>
-      <h1>조이 페이지</h1>
-      <p>현재 경로: {path}</p>
-    </div>
-  );
-};
-
-const NotFoundPage = () => {
-  const path = useCurrentPath();
-  return (
-    <div>
-      <h1>404 - 페이지를 찾을 수 없습니다</h1>
-      <p>현재 경로: {path}</p>
-    </div>
-  );
-};
-
-export { MatthewPage, AeongPage, JoyPage, NotFoundPage };
-
-const Header = () => {
-  return (
-    <nav style={{ display: 'flex', gap: '10px' }}>
-      <Link to='/matthew'>MATTHEW</Link>
-      <Link to='/aeong'>AEONG</Link>
-      <Link to='/joy'>JOY</Link>
-      <Link to='/not-found'>NOT FOUND</Link>
-    </nav>
-  );
-};
-
-function App() {
-  return (
-    <>
-      <Header />
-      <Routes>
-        <Route path='/matthew' component={MatthewPage} />
-        <Route path='/aeong' component={AeongPage} />
-        <Route path='/joy' component={JoyPage} />
-        <Route path='/not-found' component={NotFoundPage} />
-      </Routes>
-    </>
-  );
+function App(){
+  return <RouterProvider router={router} />;
 }
 
 export default App;
+
+// movies/upcoming
+// movies/popular
+// movies/now_playing
+// movies/top_rated
+
+// movies?category=upcoming
+// movies?category=popular
+// movies?category=now_playing
+// movies?category=top_rated
+
+// movies/{movie_id}
+// movies/123
+
+// movie/category/{movie_id}
