@@ -1,16 +1,27 @@
 import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
-import Home from "./Pages/Home";
-import Page2 from "./Pages/Page2";
 import RootLayout from "./Layouts/RootLayout";
+import MoviesPage from "./Pages/MoviesPage";
+import HomePage from "./Pages/HomePage";
+import MovieDetailPage from "./Pages/MovieDetailPage";
 
 const router = createBrowserRouter([
   {
+    path: "/",
     element: <RootLayout />,
     children: [
-      { index: true, element: <Home /> },
-      { path: "2", element: <Page2 /> },
+      {
+        index: true,
+        element: <HomePage />,
+      },
+      {
+        path: ":category",
+        element: <MoviesPage />,
+      },
+      {
+        path: ":category/:movieid",
+        element: <MovieDetailPage />,
+      },
     ],
   },
 ]);

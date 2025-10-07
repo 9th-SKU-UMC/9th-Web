@@ -1,18 +1,23 @@
-import styled from "styled-components";
+import { useEffect, useState } from "react";
 
-export default function Home() {
+function Home() {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log("컴포넌트가 처음 마운트될 때 실행됩니다!");
+  }, []);
+
+  useEffect(() => {
+    console.log(`count 값이 ${count}로 변경될 때마다 실행됩니다!`);
+  }, [count]);
+
   return (
-    <Div>
-      <h1>Home Page</h1>
-    </Div>
+    <>
+      <h1>{count}</h1>
+      <button onClick={() => setCount(count + 1)}>+1 증가</button>
+      <button onClick={() => setCount(count - 1)}>-1 증가</button>
+    </>
   );
 }
 
-const Div = styled.div`
-  background-color: #e1ffee;
-  color: #83debb;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 400px;
-`;
+export default Home;

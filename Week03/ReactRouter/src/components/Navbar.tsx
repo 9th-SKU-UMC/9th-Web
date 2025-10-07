@@ -1,43 +1,32 @@
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { NavLink } from "react-router-dom";
+import clsx from "clsx";
 
-const Navbar = () => {
-  return (
-    <Div>
-      <Nav>
-        <Link to="/">Home Page</Link>
-        <Link to="/2">Page2</Link>
-      </Nav>
-    </Div>
+const linkClass = ({ isActive }: { isActive: boolean }) =>
+  clsx(
+    "no-underline font-bold text-[18px] transition-transform active:scale-90",
+    isActive ? "text-[#ff1493]" : "text-[#ffa5e4]"
   );
-};
 
-export default Navbar;
-
-const Div = styled.div`
-  background-color: #ffe1f6;
-  padding: 30px;
-  display: flex;
-  justify-content: center;
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  gap: 100px;
-
-  a {
-    color: #ffa5e4;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 18px;
-  }
-
-  a:hover {
-    color: #fd86c2;
-  }
-
-  a:active {
-    color: deeppink;
-    transform: scale(0.95);
-  }
-`;
+export default function Navbar() {
+  return (
+    <div className="bg-[#ffe1f6] p-[30px] flex justify-center h-[100px] w-auto">
+      <nav className="flex gap-[100px]">
+        <NavLink to="/" className={linkClass}>
+          Movies
+        </NavLink>
+        <NavLink to="popular" className={linkClass}>
+          Popular
+        </NavLink>
+        <NavLink to="now_playing" className={linkClass}>
+          Now Playing
+        </NavLink>
+        <NavLink to="upcoming" className={linkClass}>
+          Upcoming
+        </NavLink>
+        <NavLink to="top_rated" className={linkClass}>
+          Top Rated
+        </NavLink>
+      </nav>
+    </div>
+  );
+}
