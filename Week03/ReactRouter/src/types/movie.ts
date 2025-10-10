@@ -26,6 +26,7 @@ export type DateRange = {
 
 export type MovieDetail = {
   id: number;
+  title: string;
   original_title: string;
   homepage: string;
   overview: string;
@@ -35,4 +36,20 @@ export type MovieDetail = {
   runtime: number;
   vote_average: number;
   backdrop_path: string;
+};
+
+export type Credits = {
+  id: number;
+  cast: Cast[];
+};
+
+export type Cast = {
+  id: number;
+  name: string;
+  original_name: string;
+  character: string;
+  cast_id: number;
+  profile_path: string;
+  credit_id: string;
+  order: number;
 };

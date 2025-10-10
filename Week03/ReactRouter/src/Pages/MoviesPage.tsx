@@ -46,21 +46,10 @@ export default function MoviesPage() {
   }, [page, category]);
 
   if (isError) return <span className="text-red-500 text-2xl">ERROR</span>;
+  window.scrollTo(0, 0);
 
   return (
     <>
-      <div className="flex items-center justify-center m-10 gap-10 text-2xl">
-        <button
-          className="flex bg-[#bddfee] text-white px-4 py-2 rounded-xl hover:bg-[#6fb4e5] transition-all duration-200 disabled:bg-gray-300 cursor-pointer disabled:cursor-not-allowed"
-          disabled={page === 1}
-          onClick={() => setPage((prev) => prev - 1)}
-        >{`<`}</button>
-        <span className="text-[#6fb4e5]">{page}</span>
-        <button
-          className="flex bg-[#bddfee] text-white px-4 py-2 rounded-xl hover:bg-[#6fb4e5] transition-all duration-200 cursor-pointer"
-          onClick={() => setPage((prev) => prev + 1)}
-        >{`>`}</button>
-      </div>
       {isLoading ? (
         <div className="flex items-center justify-center h-dvh">
           <LoadingSpinner />
@@ -100,6 +89,18 @@ export default function MoviesPage() {
           ))}
         </div>
       )}
+      <div className="flex items-center justify-center m-10 gap-10 text-2xl">
+        <button
+          className="flex bg-[#bddfee] text-white px-4 py-2 rounded-xl hover:bg-[#6fb4e5] transition-all duration-200 disabled:bg-gray-300 cursor-pointer disabled:cursor-not-allowed"
+          disabled={page === 1}
+          onClick={() => setPage((prev) => prev - 1)}
+        >{`<`}</button>
+        <span className="text-[#6fb4e5]">{page}</span>
+        <button
+          className="flex bg-[#bddfee] text-white px-4 py-2 rounded-xl hover:bg-[#6fb4e5] transition-all duration-200 cursor-pointer"
+          onClick={() => setPage((prev) => prev + 1)}
+        >{`>`}</button>
+      </div>
     </>
   );
 }
