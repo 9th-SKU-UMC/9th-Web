@@ -1,55 +1,45 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import type { Movie, MovieResponse, MoviePageProps } from "../types/movie";
-import MovieCard from "../components/MovieCard";
+import MovieCard from "./MovieCard";
+import LoadingSpinner from "./LoadingSpinner";
+import ErrorMessage from "./ErrorMessage";
 
-export default function MoviePage({ category, token }: MoviePageProps) {
+const TMBD_TOKEN = import.meta.env.VITE_TMDB_KEY;
+
+export default function MoviePage({ category }: MoviePageProps) {
   const [movies, setmovies] = useState<Movie[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
-
   useEffect(() => {
+    setIsLoading(true);
+    setError(null);
+
     const fetchMovies = async () => {
       try {
-        setIsLoading(true);
-        setError(null);
-
         const { data } = await axios.get<MovieResponse>(
           `https://api.themoviedb.org/3/movie/${category}?language=en-US&page=${page}`,
           {
             headers: {
-              Authorization: `bearer ${token}`,
+              Authorization: `Bearer ${TMBD_TOKEN}`,
             },
           }
         );
 
         setmovies(data.results);
       } catch (error) {
-        setError("error");
+        setError("영화 데이터를 불러오는 데 실패했습니다.");
       } finally {
         setIsLoading(false);
       }
     };
 
     fetchMovies();
-  }, [category, page, token]);
+  }, [category, page]);
 
-  if (error) {
-    return (
-      <div className="text-red-600 font-semibold text-center mt-10">
-        {error}
-      </div>
-    );
-  }
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-4 border-t-blue-600 border-white"></div>
-      </div>
-    );
-  }
+  if (error) return <ErrorMessage message={error}></ErrorMessage>;
+  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
 
   return (
     <div className="p-10">

@@ -7,6 +7,8 @@ import Upcoming from "./pages/Upcoming";
 import TopRated from "./pages/TopRated";
 import NowPlaying from "./pages/NowPlaying";
 import MovieDetail from "./pages/MovieDetail";
+import Login from "./pages/Login/LoginPage";
+import Signup from "./pages/Login/SignupPage";
 
 function App() {
   console.log(import.meta.env.VITE_TMDB_KEY);
@@ -15,6 +17,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/signup" element={<Signup />}></Route>
           <Route path="popular" element={<Popular />}></Route>
           <Route path="upcoming" element={<Upcoming />}></Route>
           <Route path="top-rated" element={<TopRated />}></Route>

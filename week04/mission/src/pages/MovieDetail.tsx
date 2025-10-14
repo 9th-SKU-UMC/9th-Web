@@ -1,43 +1,19 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useCustomFetch } from "../hooks/useCustomFetch";
 import type { Cast, MovieDetail } from "../types/movie";
-import ErrorMessage from "../components/ErrorMessage";
 import LoadingSpinner from "../components/LoadingSpinner";
+import ErrorMessage from "../components/ErrorMessage";
 
 export default function MovieDetail() {
   const { movieId } = useParams();
-  const [movie, setMovie] = useState<MovieDetail | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const url = `https://api.themoviedb.org/3/movie/${movieId}?language=ko-KR&append_to_response=credits`;
+  const { data: movie, isLoading, error } = useCustomFetch<MovieDetail>(url);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get<MovieDetail>(
-          `https://api.themoviedb.org/3/movie/${movieId}?language=en-US&append_to_response=credits`,
-          {
-            headers: {
-              Authorization: `Bearer ${import.meta.env.VITE_TMDB_KEY}`,
-            },
-          }
-        );
-
-        setMovie(response.data);
-      } catch {
-        setError("error");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [movieId]);
-
-  if (error) return <ErrorMessage message={error}></ErrorMessage>;
-  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
-
+  if (error) return <ErrorMessage message={error} />;
+  if (isLoading) return <LoadingSpinner />;
   if (!movie) return null;
+
+  const credits = movie.credits;
 
   return (
     <div className="p-6">
@@ -55,12 +31,11 @@ export default function MovieDetail() {
           <p className="leading-relaxed">{movie.overview}</p>
         </div>
       </div>
-
-      {movie.credits && (
+      {credits && (
         <div className="mt-10">
           <h2 className="text-2xl font-semibold mb-4">감독/출연</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6">
-            {movie.credits.cast.slice(0, 10).map((person: Cast) => (
+            {credits.cast.slice(0, 10).map((person: Cast) => (
               <div key={person.id} className="text-center">
                 <img
                   src={
