@@ -1,38 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getMovieDetail } from '../api/detail';
+import useCustomFetch from '../hooks/useCustomFetch';
 import type { MovieDetailWithCredits } from '../types/MovieDetail';
 import type { Cast } from '../types/MovieDetail';
 import LoadingSpinner from '../components/LoadingSpinner';
 import CastProfile from '../components/CastProfile';
+import ErrorMessage from '../components/ErrorMessage';
 
+// 영화 상세 페이지
 const MovieDetail = () => {
     const { movieId } = useParams<{ movieId: string }>();
 
     const [movieDetail, setMovieDetail] = useState<MovieDetailWithCredits | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
+
+    const { data, error, loading } = useCustomFetch<MovieDetailWithCredits>(
+        {
+            url: `/movie/${movieId}`,
+            method: "GET",
+            params: {
+                language: "ko-KR",
+                append_to_response: "credits",
+            }
+        },
+        [movieId]
+    );
 
     useEffect(() => {
-        const fetchMovieDetail = async () => {
-            if (movieId) {
-                setLoading(true);
-                const { data, error } = await getMovieDetail(Number(movieId));
-
-                if (error) {
-                    setError(error);
-                } else if (data) {
-                    setMovieDetail(data);
-                }
-
-                setLoading(false);
-                console.log(data);
-            }
+        if (data) {
+            setMovieDetail(data);
         }
-        fetchMovieDetail();
-    }, [movieId])
+    }, [data]);
 
-    if (error) return <p>에러 발생: {error}</p>
+    if (error) return <ErrorMessage message={error.message} />;
     if (loading) return <LoadingSpinner />;
 
     return (

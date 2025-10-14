@@ -1,41 +1,36 @@
 import { useState, useEffect } from "react";
-import type { Movie } from "../types/Movie";
-import { getTopRatedMovies } from "../api/topRated";
+import type { Movie, TopRatedResponse } from "../types/Movie";
+import useCustomFetch from "../hooks/useCustomFetch";
 import MovieCard from "../components/MovieCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import PageNavigator from "../components/PageNavigator";
+import ErrorMessage from "../components/ErrorMessage";
 
 // 평점 높은 순 영화 페이지
 const TopRated = () => {
-    const [movies, setMovies] = useState<Movie[]>([]);
-    const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [currentPage, setCurrentPage] = useState<number>(1);
-    const [totalPages, setTotalPages] = useState<number>(1);
+    const [page, setCurrentPage] = useState<number>(1);
 
-    useEffect(() => {
-        const fetchMovies = async () => {
-            setLoading(true);
-            const { data, error } = await getTopRatedMovies(currentPage);
-
-            if (error) {
-                setError(error);
-            } else if (data) {
-                setMovies(data.results);
-                setTotalPages(data.total_pages);
+    const { data, error, loading } = useCustomFetch<TopRatedResponse>(
+        {
+            url: "/movie/top_rated",
+            method: "GET",
+            params: {
+                language: "ko-KR",
+                page: page,
             }
+        },
+        [page]
+    );
 
-            setLoading(false);
-            console.log(data);
-        }
-        fetchMovies();
-    }, [currentPage]);
+    const movies: Movie[] = data?.results || [];
+    const currentPage = data?.page || 1;
+    const totalPages = data?.total_pages || 1;
 
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
     }
 
-    if (error) return <p>에러 발생: {error}</p>
+    if (error) return <ErrorMessage message={error.message} />;
     if (loading) return <LoadingSpinner />;
 
     return (
@@ -45,6 +40,7 @@ const TopRated = () => {
             {movies?.map((movie) => (
                 <MovieCard
                     key = {movie.id}
+                    movieId = {movie.id}
                     title = {movie.title}
                     overview = {movie.overview}
                     posterPath = {movie.poster_path}

@@ -10,7 +10,7 @@ export type Movie = {
 
 }
 
-// 기본 응답
+// 기본 응답(popular, top_rated 등)
 export type MovieResponse = {
     page: number;
     results: Movie[];
