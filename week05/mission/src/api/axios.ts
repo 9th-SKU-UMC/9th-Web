@@ -6,10 +6,8 @@ import { LOCAL_STORAGE_KEY } from "../constants/key";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 
 interface CustomInternalAxiosRequestConfig extends InternalAxiosRequestConfig {
-  _retry?: boolean; //요청 재시도 여부를 나타내는 플래그
+  _retry?: boolean;
 }
-
-//전역 변수로 refresh 요청의 Promise를 저장해서 중복 요청을 방지한다.
 let refreshPromise: Promise<string> | null = null;
 
 export const axiosInstance = axios.create({
