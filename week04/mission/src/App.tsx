@@ -7,8 +7,8 @@ import Upcoming from "./pages/Upcoming";
 import TopRated from "./pages/TopRated";
 import NowPlaying from "./pages/NowPlaying";
 import MovieDetail from "./pages/MovieDetail";
-import Login from "./pages/Login/LoginPage";
-import Signup from "./pages/Login/SignupPage";
+import Login from "./pages/LoginPage";
+import Signup from "./pages/SignupPage";
 
 function App() {
   console.log(import.meta.env.VITE_TMDB_KEY);
