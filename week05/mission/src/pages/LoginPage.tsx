@@ -16,6 +16,15 @@ export default function LoginPage() {
     await login(values);
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href =
+      import.meta.env.VITE_API_BASE_URL + "/v1/auth/google/login";
+  };
+
+  const isDisabled =
+    Object.values(errors || {}).some((error) => error.length > 0) ||
+    Object.values(values).some((value) => value === "");
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -24,7 +33,8 @@ export default function LoginPage() {
       <h1 className="text-xl font-bold text-center mb-2">로그인</h1>
 
       <button
-        type="submit"
+        type="button"
+        onClick={handleGoogleLogin}
         className="w-full flex items-center justify-center gap-2 border border-gray-400 py-2 rounded mb-4 cursor-pointer"
       >
         <img src={googleIcon} alt="Google" className="w-5 h-5" />
@@ -56,6 +66,7 @@ export default function LoginPage() {
 
       <button
         type="submit"
+        disabled={isDisabled}
         className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
       >
         로그인

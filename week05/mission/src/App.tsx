@@ -11,6 +11,7 @@ import Signup from "./pages/SignupPage";
 import MyPage from "./pages/MyPage";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedLayout from "./layouts/ProtectedLayout";
+import { GoogleLoginRedirectPage } from "./pages/GoogleLoginRedirectPage";
 
 const routes: RouteObject[] = [
   {
@@ -26,6 +27,7 @@ const routes: RouteObject[] = [
       { path: "top-rated", element: <TopRated /> },
       { path: "now-playing", element: <NowPlaying /> },
       { path: "movie/:movieId", element: <MovieDetail /> },
+      { path: "v1/auth/google/callback", element: <GoogleLoginRedirectPage /> },
 
       // Protected
       {
