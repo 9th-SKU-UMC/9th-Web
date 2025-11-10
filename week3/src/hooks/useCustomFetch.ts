@@ -10,7 +10,7 @@ export type ApiResponseIncludeLoading<T> = {
 
 // 커스텀 훅: 데이터 fetch 기능
 const useCustomFetch = <T,>(
-    config: AxiosRequestConfig,
+    config: AxiosRequestConfig, //불안형 개구리
     deps: any[] = []
 ): ApiResponseIncludeLoading<T> => {
     const [data, setData] = useState<T | null>(null);

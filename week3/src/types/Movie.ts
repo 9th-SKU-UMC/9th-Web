@@ -7,7 +7,6 @@ export type Movie = {
     vote_average: number;
     vote_count: number;
     popularity: number;
-
 }
 
 // 기본 응답(popular, top_rated 등)

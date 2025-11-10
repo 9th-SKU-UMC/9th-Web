@@ -25,7 +25,6 @@ const schema = z.object({
 const Signup = () => {
     const navigate = useNavigate();
     const [signupStep, setSignupStep] = useState(1); // 1: 이메일, 2: 비밀번호, 3: 프로필
-    const [isStepValid, setIsStepValid] = useState(false); // 현재 단계 유효성 검사 상태
     const profileSrc = "/src/assets/profile-icon.png";
 
     type FormValues = z.infer<typeof schema>;

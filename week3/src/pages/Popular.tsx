@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type { Movie, MovieResponse } from "../types/Movie";
-// import { getPopularMovies } from "../api/popular";
 import useCustomFetch from "../hooks/useCustomFetch";
 import MovieCard from "../components/MovieCard";
 import LoadingSpinner from "../components/LoadingSpinner";
 import PageNavigator from "../components/PageNavigator";
+import ErrorMessage from "../components/ErrorMessage";
 
 // 인기 영화 페이지
 const Popular = () => {
@@ -23,17 +23,19 @@ const Popular = () => {
     )
 
     const movies: Movie[] = data?.results || [];
+    const currentPage = data?.page || 1;
+    const totalPages = data?.total_pages || 1;
 
     const handlePageChange = (newPage: number) => {
         setPage(newPage);
     }
 
-    if (error) return <p>에러 발생: {error.message}</p>;
+    if (error) return <ErrorMessage message={error.message} />;
     if (loading) return <LoadingSpinner />;
 
     return (
         <>
-            <PageNavigator currentPage={page} totalPages={data?.total_pages} onPageChange={handlePageChange} />
+            <PageNavigator currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
             <div className="grid grid-cols-6 gap-6">
                 {movies?.map((movie) => (
                     <MovieCard
