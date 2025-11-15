@@ -17,6 +17,7 @@ export const login = async (payload: LoginPayload): Promise<LoginResponse> => {
         const { accessToken, refreshToken } = data.data;
         authStorage.setToken('access', accessToken);
         authStorage.setToken('refresh', refreshToken);
+        authStorage.setUserInfo({ id: data.data.id, name: data.data.name });
 
         return data.data;
     } catch (error) {

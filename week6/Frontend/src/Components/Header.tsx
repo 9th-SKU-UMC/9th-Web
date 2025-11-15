@@ -9,6 +9,7 @@ import { SidebarContext } from "../Hooks/SidebarProvider";
 const Header = () => {
     const location = useLocation();
     const isAuthenticated = authStorage.isAuthenticated();
+    const userInfo = authStorage.getUserInfo();
     const sidebarContext = useContext(SidebarContext);
 
     const isLogin = location.pathname === '/login';
@@ -29,7 +30,7 @@ const Header = () => {
 
     return (
         <>
-        <header className="sticky top-0 z-40 w-full">
+        <header className="sticky top-0 z-40 w-full bg-zinc-800">
             <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between px-4 sm:px-6 lg:px-8">
                 <div className="flex gap-4">
                     <button onClick={sidebarContext?.toggleSidebar}>
@@ -58,15 +59,11 @@ const Header = () => {
                             로그인
                         </NavLink>
                         ) : (
-                        <button
-                            onClick={handleLogout}
-                            className={clsx(baseButton,{
-                                [activeButton]: isLogin,
-                                [inActiveButton]: !isLogin,
-                            })}
+                        <p
+                            className="inline-flex"
                         >
-                            로그아웃
-                        </button>
+                            {userInfo?.name}님 반갑습니다.
+                        </p>
                     )}
 
                     <NavLink

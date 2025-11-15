@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getUserInfo } from "../../apis/users/getUesrInfo";
+import { getUserInfo } from "../../apis/users/getUserInfo";
 import type { User } from "../../types/user";
 
 const Profile = () => {

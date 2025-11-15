@@ -11,5 +11,10 @@ export const PATH = {
         view: () => '/profile',
         edit: () => '/profile/edit',
         delete: () => '/profile/delete',
+    },
+
+    music: {
+        list: () => '/music',
+        detail: (lpId: number) => `/music/${lpId}`,
     }
 } as const;

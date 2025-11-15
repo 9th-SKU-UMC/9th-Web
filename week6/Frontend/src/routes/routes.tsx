@@ -1,6 +1,7 @@
 import type { RouteObject } from "react-router-dom";
 import { publicRoutes } from "./domain/public.routes";
 import { profileRoutes } from "./domain/profile.routes";
+import { musicRoutes } from "./domain/music.routes";
 import BaseLayout from "../Layout/BaseLayout";
 import ProtectedLayout from "../Layout/ProtectedLayout";
 
@@ -11,6 +12,7 @@ export const routes: RouteObject[] =[
         errorElement: <div>Not Found</div>,
         children: [
             ...publicRoutes,
+            ...musicRoutes,
             {
                 element: <ProtectedLayout />,
                 children: [

@@ -17,6 +17,18 @@ export const authStorage = {
             localStorage.removeItem(`${type}Token`);
         }
     },
+    getUserInfo: () => {
+        const userInfo = localStorage.getItem('userInfo');
+        if (!userInfo) return null;
+        return JSON.parse(userInfo);
+    },
+    setUserInfo: (userInfo: object | null | undefined) => {
+        if (userInfo) {
+            localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        } else {
+            localStorage.removeItem('userInfo');
+        }
+    },
     // check if user is authenticated
     isAuthenticated: (): boolean => {
         const token = authStorage.getToken('access');
