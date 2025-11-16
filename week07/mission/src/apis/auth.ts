@@ -33,3 +33,17 @@ export const postLogout = async (): Promise<void> => {
 
   return data;
 };
+
+export const updateMyInfo = async (body: {
+  name: string;
+  bio?: string;
+  avatar?: string;
+}) => {
+  const { data } = await axiosInstance.patch("/v1/users", body);
+  return data;
+};
+
+export const deleteUser = async () => {
+  const { data } = await axiosInstance.delete("/v1/users");
+  return data;
+};

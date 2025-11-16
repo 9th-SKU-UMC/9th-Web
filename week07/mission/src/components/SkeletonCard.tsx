@@ -1,5 +1,5 @@
 const SkeletonCard = () => {
-  return <div className="w-full h-60 bg-gray-200 rounded-md animate-pulse" />;
+  return <div className="w-full bg-gray-200 aspect-square animate-pulse" />;
 };
 
 export default SkeletonCard;

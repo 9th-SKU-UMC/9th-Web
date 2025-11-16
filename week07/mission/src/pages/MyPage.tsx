@@ -4,9 +4,16 @@ import { getMyInfo } from "../apis/auth";
 import useGetLpList from "../hooks/queries/useGetLpList";
 import LpCard from "../components/LpCard";
 import { PAGINATION_ORDER } from "../enums/common";
+import ProfileEdit from "../components/ProfileEdit";
+import defaultProfile from "../assets/default-profile.jpg";
 
 export default function MyPage() {
   const [data, setData] = useState<ResponseMyInfoDto | null>(null);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   const lpQuery = useGetLpList({
     search: "",
@@ -38,7 +45,11 @@ export default function MyPage() {
           />
         ) : (
           <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 shadow">
-            아바타 없음
+            <img
+              src={defaultProfile}
+              alt="기본 프로필"
+              className="rounded-full w-full h-full object-cover"
+            ></img>
           </div>
         )}
 
@@ -48,12 +59,22 @@ export default function MyPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow p-6 leading-relaxed">
-        <h2 className="text-xl font-semibold mb-4">내 정보</h2>
-        <p className="text-gray-700">이름: {user?.name}</p>
-        <p className="text-gray-700 mt-1">이메일: {user?.email}</p>
+      {/* 내 정보 카드 */}
+      <div className="bg-white rounded-2xl shadow p-6 leading-relaxed relative">
+        <button
+          onClick={openModal}
+          className="absolute top-4 right-4 text-xl cursor-pointer"
+        >
+          ⚙
+        </button>
+
+        <h2 className="text-xl font-semibold mb-4">MyInfo</h2>
+        <p className="text-gray-700">Name: {user?.name}</p>
+        <p className="text-gray-700 mt-1">Bio: {user?.bio}</p>
+        <p className="text-gray-700 mt-1">email: {user?.email}</p>
       </div>
 
+      {/* LP 목록 */}
       <div className="bg-white rounded-2xl shadow p-6 leading-relaxed mt-8">
         <h2 className="text-xl font-semibold mb-4">내가 만든 LP</h2>
 
@@ -74,6 +95,8 @@ export default function MyPage() {
           )}
         </div>
       </div>
+
+      {isOpen && <ProfileEdit close={closeModal} />}
     </div>
   );
 }
