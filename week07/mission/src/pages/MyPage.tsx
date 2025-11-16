@@ -8,7 +8,6 @@ import { PAGINATION_ORDER } from "../enums/common";
 export default function MyPage() {
   const [data, setData] = useState<ResponseMyInfoDto | null>(null);
 
-  // LP 전체 목록 조회
   const lpQuery = useGetLpList({
     search: "",
     order: PAGINATION_ORDER.desc,
@@ -25,7 +24,6 @@ export default function MyPage() {
 
   const user = data?.data;
 
-  // LP 목록 정리
   const allLps = lpQuery.data?.pages.flatMap((p) => p.data.data) ?? [];
   const myLps = user ? allLps.filter((lp) => lp.authorId === user.id) : [];
 
@@ -56,7 +54,6 @@ export default function MyPage() {
         <p className="text-gray-700 mt-1">이메일: {user?.email}</p>
       </div>
 
-      {/* 내가 만든 LP 목록 */}
       <div className="bg-white rounded-2xl shadow p-6 leading-relaxed mt-8">
         <h2 className="text-xl font-semibold mb-4">내가 만든 LP</h2>
 

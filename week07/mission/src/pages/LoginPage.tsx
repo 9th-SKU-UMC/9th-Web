@@ -3,9 +3,12 @@ import { validateSignin } from "../utils/validate";
 import googleIcon from "../assets/googleIcon.svg";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
 
 export default function LoginPage() {
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const [submitAttempted, setSubmitAttempted] = useState(false);
 
@@ -14,7 +17,17 @@ export default function LoginPage() {
     validate: validateSignin,
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const loginMutation = useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      navigate("/");
+    },
+    onError: () => {
+      alert("로그인에 실패했습니다.");
+    },
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitAttempted(true);
 
@@ -25,7 +38,7 @@ export default function LoginPage() {
 
     if (hasError || empty) return;
 
-    await login(values);
+    loginMutation.mutate(values);
   };
 
   const handleGoogleLogin = () => {
@@ -55,7 +68,6 @@ export default function LoginPage() {
         <hr className="flex-grow border-gray-300" />
       </div>
 
-      {/* 이메일 */}
       <input
         {...getInputProps("email")}
         placeholder="이메일"
@@ -65,7 +77,6 @@ export default function LoginPage() {
         <p className="text-red-500 text-sm">{errors.email}</p>
       )}
 
-      {/* 비밀번호 */}
       <input
         {...getInputProps("password")}
         type="password"
@@ -78,9 +89,10 @@ export default function LoginPage() {
 
       <button
         type="submit"
+        disabled={loginMutation.isPending}
         className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
       >
-        로그인
+        {loginMutation.isPending ? "로그인 중..." : "로그인"}
       </button>
     </form>
   );

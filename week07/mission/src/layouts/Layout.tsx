@@ -31,8 +31,8 @@ function Layout() {
     const payload = {
       title,
       content,
-      thumbnail, // 문자열(URL)
-      tags: ["a", "b", "c"], // ← 여기 원하는대로 넣기
+      thumbnail,
+      tags: ["a", "b", "c"],
       published: true,
     };
 
@@ -48,14 +48,12 @@ function Layout() {
     });
   };
 
-  // 이미지 선택 처리
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
     const file = e.target.files[0];
     setThumbnail(e.target.value);
 
-    // 미리보기
     const previewURL = URL.createObjectURL(file);
     setPreview(previewURL);
   };
@@ -98,7 +96,7 @@ function Layout() {
             to="/"
             className="flex items-center px-4 py-2 m-2 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-[#1E2028]"
           >
-            {!collapsed && <span className="ml-2">홈</span>}
+            {!collapsed && <span className="ml-2">LP 목록</span>}
           </NavLink>
 
           <NavLink
