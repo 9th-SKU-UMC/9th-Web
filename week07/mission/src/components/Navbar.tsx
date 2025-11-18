@@ -14,12 +14,15 @@ export default function Navbar() {
   const logoutMutation = useLogout();
 
   useEffect(() => {
+    if (!accessToken) {
+      return;
+    }
     const getData = async () => {
       const response = await getMyInfo();
       setData(response);
     };
     getData();
-  }, []);
+  }, [accessToken]);
 
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {

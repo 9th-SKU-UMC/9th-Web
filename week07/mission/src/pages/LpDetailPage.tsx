@@ -4,6 +4,7 @@ import { usePostLike } from "../hooks/mutations/usePostLike";
 import { useDeleteLike } from "../hooks/mutations/useDeleteLike";
 import { useGetMyInfo } from "../hooks/queries/useGetMyInfo";
 import type { Likes } from "../types/lp";
+import defaultImg from "../assets/default-profile.jpg";
 
 export default function LpDetailPage() {
   const { lpid } = useParams();
@@ -48,7 +49,7 @@ export default function LpDetailPage() {
         <div className="flex justify-between items-start mb-6">
           <div className="flex items-center gap-3">
             <img
-              src={data?.data.author?.avatar || "/default-profile.png"}
+              src={data?.data.author?.avatar || defaultImg}
               className="w-10 h-10 rounded-full object-cover"
             />
             <span className="font-semibold">{data?.data.author?.name}</span>

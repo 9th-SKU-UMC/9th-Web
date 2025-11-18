@@ -44,13 +44,13 @@ const publicRoutes: RouteObject[] = [
 const protectedRoutes: RouteObject[] = [
   {
     path: "/",
-    element: (
-      <>
-        <Layout />
-        <ProtectedLayout />
-      </>
-    ),
-    children: [{ path: "mypage", element: <MyPage /> }],
+    element: <Layout />,
+    children: [
+      {
+        element: <ProtectedLayout />,
+        children: [{ path: "mypage", element: <MyPage /> }],
+      },
+    ],
   },
 ];
 

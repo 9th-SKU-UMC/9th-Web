@@ -5,6 +5,7 @@ export const useDeleteUser = () => {
   return useMutation({
     mutationFn: deleteUser,
     onSuccess: () => {
+      localStorage.removeItem("token");
       alert("탈퇴가 완료되었습니다.");
     },
     onError: () => {
