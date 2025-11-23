@@ -11,7 +11,8 @@ function SearchPage() {
     if (!debouncedQuery.trim()) {
       return;
     }
-    axios.get("http://localhost:8000/v1/lps/" + debouncedQuery);
+    console.log("Debounce", debouncedQuery);
+    //axios.get("http://localhost:8000/v1/lps/" + debouncedQuery);
   }, [debouncedQuery]);
 
   return (
