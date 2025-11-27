@@ -1,0 +1,93 @@
+import { useState } from "react";
+import { useGetMyInfo } from "../hooks/queries/useGetMyInfo";
+import useGetLpList from "../hooks/queries/useGetLpList";
+import LpCard from "../components/LpCard";
+import { PAGINATION_ORDER } from "../enums/common";
+import ProfileEdit from "../components/ProfileEdit";
+import defaultProfile from "../assets/default-profile.jpg";
+
+export default function MyPage() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { data } = useGetMyInfo();
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
+
+  const lpQuery = useGetLpList({
+    search: "",
+    order: PAGINATION_ORDER.desc,
+    limit: 100,
+  });
+
+  const user = data?.data;
+
+  const allLps = lpQuery.data?.pages.flatMap((p) => p.data.data) ?? [];
+  const myLps = user ? allLps.filter((lp) => lp.authorId === user.id) : [];
+
+  return (
+    <div className="max-w-xl mx-auto p-6">
+      <div className="flex items-center gap-4 mb-6">
+        {user?.avatar ? (
+          <img
+            src={user.avatar as string}
+            alt="프로필 이미지"
+            className="w-20 h-20 rounded-full object-cover shadow"
+          />
+        ) : (
+          <div className="w-20 h-20 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 shadow">
+            <img
+              src={defaultProfile}
+              alt="기본 프로필"
+              className="rounded-full w-full h-full object-cover"
+            ></img>
+          </div>
+        )}
+
+        <div>
+          <h1 className="text-2xl font-bold">{user?.name}님 환영합니다!</h1>
+          <p className="text-gray-500">{user?.email}</p>
+        </div>
+      </div>
+
+      {/* 내 정보 카드 */}
+      <div className="bg-white rounded-2xl shadow p-6 leading-relaxed relative">
+        <button
+          onClick={openModal}
+          className="absolute top-4 right-4 text-xl cursor-pointer"
+        >
+          ⚙
+        </button>
+
+        <h2 className="text-xl font-semibold mb-4">MyInfo</h2>
+        <p className="text-gray-700">Name: {user?.name}</p>
+        <p className="text-gray-700 mt-1">Bio: {user?.bio}</p>
+        <p className="text-gray-700 mt-1">email: {user?.email}</p>
+      </div>
+
+      {/* LP 목록 */}
+      <div className="bg-white rounded-2xl shadow p-6 leading-relaxed mt-8">
+        <h2 className="text-xl font-semibold mb-4">내가 만든 LP</h2>
+
+        <div className="grid grid-cols-2 gap-4">
+          {myLps.map((lp) => (
+            <LpCard
+              key={lp.id}
+              id={lp.id}
+              title={lp.title}
+              thumbnail={lp.thumbnail}
+              createdAt={lp.createdAt}
+              likes={lp.likes.length}
+            />
+          ))}
+
+          {myLps.length === 0 && (
+            <p className="text-gray-500 text-sm">작성한 LP가 없습니다.</p>
+          )}
+        </div>
+      </div>
+
+      {isOpen && <ProfileEdit close={closeModal} />}
+    </div>
+  );
+}
