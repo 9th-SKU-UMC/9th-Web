@@ -18,8 +18,6 @@ export default function LPCard({
   const navigate = useNavigate();
   const formattedDate = new Date(createdAt).toLocaleDateString("ko-KR");
 
-  console.log("썸네일: ", thumbnail);
-
   return (
     <div
       onClick={() => navigate(`/lp/${id}`)}

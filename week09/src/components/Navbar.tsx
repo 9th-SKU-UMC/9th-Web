@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import type { ResponseMyInfoDto } from "../types/auth";
 import { useGetMyInfo } from "../hooks/queries/useGetMyInfo";
 import { useLogout } from "../hooks/mutations/useLogout";
 
@@ -11,7 +9,7 @@ export default function Navbar() {
 
   const logoutMutation = useLogout();
 
-  const { data } = useGetMyInfo({ enabled: !!accessToken });
+  const { data } = useGetMyInfo({ queryKey: ["me"], enabled: !!accessToken });
 
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {
@@ -29,7 +27,10 @@ export default function Navbar() {
     <div className="w-full h-17 flex items-center justify-end gap-3 px-6 border-b border-gray-200 bg-white sticky top-0 z-10">
       {accessToken ? (
         <>
-          <button onClick={() => navigate("/mypage")} className="cursor-pointer">
+          <button
+            onClick={() => navigate("/mypage")}
+            className="cursor-pointer"
+          >
             🔍 {data?.data.name}님 반갑습니다.
           </button>
 

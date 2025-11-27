@@ -5,6 +5,7 @@ import { axiosInstance } from "./axios.ts";
 export const getLpList = async (
   paginationDto: PaginationDto
 ): Promise<ResponseLpListDto> => {
+  console.log("API 호출 getLpList:", paginationDto);
   const { data } = await axiosInstance.get("/v1/lps", {
     params: paginationDto,
   });

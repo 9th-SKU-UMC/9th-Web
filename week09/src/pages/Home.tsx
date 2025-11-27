@@ -1,11 +1,18 @@
 import { useState, useRef, useEffect } from "react";
-import useGetLpList from "../hooks/queries/useGetLpList.ts";
-import { PAGINATION_ORDER } from "../types/common.ts";
-import LpCard from "../components/LpCard.tsx";
-import SkeletonCard from "../components/SkeletonCard.tsx";
+import useGetLpList from "../hooks/queries/useGetLpList";
+import { PAGINATION_ORDER } from "../types/common";
+import LpCard from "../components/LpCard";
+import SkeletonCard from "../components/SkeletonCard";
+import useDebounce from "../hooks/useDebounce";
 
 const Home = () => {
   const [order, setOrder] = useState<PAGINATION_ORDER>(PAGINATION_ORDER.desc);
+  const [search, setSearch] = useState("");
+  const debouncedSearch = useDebounce(search, 300);
+
+  useEffect(() => {
+    console.log("디바운스 확인:", debouncedSearch);
+  }, [debouncedSearch]);
 
   const toggleOrder = () => {
     setOrder((prev) =>
@@ -23,7 +30,7 @@ const Home = () => {
     isPending,
     isError,
   } = useGetLpList({
-    search: "",
+    search: debouncedSearch,
     order,
     limit: 10,
   });
@@ -58,16 +65,20 @@ const Home = () => {
 
   const allLps = data?.pages.flatMap((page) => page.data.data) ?? [];
 
-  console.log("📦 LP 목록 데이터:", allLps);
-  console.log("🟢 로딩 상태:", isPending ? "로딩 중" : "로딩 완료");
-  console.log("🔴 에러 발생 여부:", isError ? "에러 있음" : "정상 작동");
-  console.log(
-    "📦 LP ID:",
-    allLps.map((lp) => lp.id)
-  );
-
   return (
-    <div className="mt-10 px-6">
+    <div className="mt-5 px-6">
+      <div className="flex justify-center items-center mb-6">
+        <input
+          placeholder="LP 검색..."
+          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+          }}
+          className="w-1/2 px-3 py-2 border border-gray-300 rounded-lg 
+    focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+        />
+      </div>
+
       <div className="flex justify-end mb-4 gap-4">
         <span className="ml-3 text-gray-700">
           {order === PAGINATION_ORDER.desc ? "최신순" : "오래된순"}

@@ -5,7 +5,7 @@ import { QUERY_KEY } from "../../constants/key.ts";
 
 function useGetLpList({ search, order, limit }: PaginationDto) {
   return useInfiniteQuery({
-    queryKey: [QUERY_KEY.lps, order] as const,
+    queryKey: [QUERY_KEY.lps, search, order] as const,
     queryFn: async ({ pageParam }: { pageParam?: number }) =>
       getLpList({
         cursor: pageParam ?? 0,
