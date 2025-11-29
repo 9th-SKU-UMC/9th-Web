@@ -59,7 +59,7 @@ export default function MyPage() {
           ⚙
         </button>
 
-        <h2 className="text-xl font-semibold mb-4">MyInfo</h2>
+        <h2 className="text-xl font-semibold mb-4">My Info</h2>
         <p className="text-gray-700">Name: {user?.name}</p>
         <p className="text-gray-700 mt-1">Bio: {user?.bio}</p>
         <p className="text-gray-700 mt-1">email: {user?.email}</p>
