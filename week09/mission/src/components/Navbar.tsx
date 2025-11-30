@@ -1,6 +1,6 @@
 import { FaShoppingCart } from "react-icons/fa";
 import { useDispatch, useSelector } from "../hooks/useCustomRedux";
-import { calculateTotal } from "../slices/cartSlice";
+import { calculateTotal } from "../features/cart/cartSlice";
 import { useEffect } from "react";
 
 const Navbar = () => {

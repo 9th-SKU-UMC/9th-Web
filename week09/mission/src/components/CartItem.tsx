@@ -1,7 +1,7 @@
 import { FaMinus, FaPlus } from "react-icons/fa";
 import type { Lp } from "../types/cart";
 import { useDispatch } from "../hooks/useCustomRedux";
-import { decrease, increase, removeItem } from "../slices/cartSlice";
+import { decrease, increase, removeItem } from "../features/cart/cartSlice";
 
 interface CartItemProps {
   lp: Lp;

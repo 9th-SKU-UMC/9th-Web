@@ -2,6 +2,7 @@ import { Provider } from "react-redux";
 import "./App.css";
 import CartList from "./components/CartList";
 import Navbar from "./components/Navbar";
+import Modal from "./components/Modal";
 import store from "./store/store";
 import PriceBox from "./components/PriceBox";
 
@@ -11,6 +12,7 @@ function App() {
       <Navbar />
       <CartList />
       <PriceBox />
+      <Modal />
     </Provider>
   );
 }
