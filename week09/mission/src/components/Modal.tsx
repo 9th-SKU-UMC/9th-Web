@@ -1,18 +1,15 @@
-import { useDispatch, useSelector } from "../hooks/useCustomRedux";
-import { closeModal } from "../features/modal/modalSlice";
-import { clearCart } from "../features/cart/cartSlice";
+import { useModalActions, useModalInfo } from "../hooks/useModalStore";
+import { useCartActions } from "../hooks/useCartStore";
 
 const Modal = () => {
-  const dispatch = useDispatch();
-  const { isOpen } = useSelector((state) => state.modal);
-
-  const handleCloseModal = () => {
-    dispatch(closeModal());
-  };
+  const { isOpen } = useModalInfo();
+  const { close } = useModalActions();
+  const { clearCart, calculateTotal } = useCartActions();
 
   const handleConfirm = () => {
-    dispatch(clearCart());
-    dispatch(closeModal());
+    clearCart();
+    close();
+    calculateTotal();
   };
 
   if (!isOpen) return null;
@@ -20,7 +17,7 @@ const Modal = () => {
   return (
     <div
       className="fixed inset-0 bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50"
-      onClick={handleCloseModal}
+      onClick={close}
     >
       <div
         className="bg-white rounded-lg p-8 max-w-md w-full mx-4 shadow-xl"
@@ -34,14 +31,14 @@ const Modal = () => {
         </p>
         <div className="flex gap-4 justify-end">
           <button
-            onClick={handleCloseModal}
-            className="px-6 py-2 border border-gray-300 rounded-md hover:bg-gray-100 transition-colors"
+            onClick={close}
+            className="px-6 py-2 border rounded-md hover:bg-gray-100"
           >
             아니요
           </button>
           <button
             onClick={handleConfirm}
-            className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+            className="px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
           >
             네
           </button>
