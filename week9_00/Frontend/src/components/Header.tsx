@@ -6,6 +6,8 @@ import { HamburgerIcon } from "../assets/svg";
 import { useContext } from "react";
 import { SidebarContext } from "../Hooks/SidebarProvider";
 import { SearchIcon } from "../assets/svg";
+import { useToggleSearchSection } from "../Hooks/ToggleSearchSection";
+import { CloseIcon } from "../assets/svg";
 
 const Header = () => {
     const location = useLocation();
@@ -19,6 +21,8 @@ const Header = () => {
     const handleLogout = async () => {
         await logout();
     };
+
+    const { isSearchSectionOpen, toggleSearchSection } = useToggleSearchSection();
 
     const baseButton = 
         "inline-flex items-center justify-center rounded-md px-3.5 py-2 text-sm font-semibold transition";
@@ -48,8 +52,18 @@ const Header = () => {
                 </div>
 
                 <div className="flex items-center space-x-4">
-                    <button className="p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                        <SearchIcon className="h-5 w-5 text-zinc-200 cursor-pointer"/>
+                    <button>
+                        {isSearchSectionOpen ? (
+                            <CloseIcon 
+                                className="h-3 w-3 text-zinc-200 cursor-pointer"
+                                onClick={toggleSearchSection}
+                            />
+                        ) : (
+                            <SearchIcon 
+                                className="h-5 w-5 text-zinc-200 cursor-pointer"
+                                onClick={toggleSearchSection}
+                            />
+                        )}
                     </button>
                     
                     <nav className="space-x-2">
